@@ -1,13 +1,13 @@
 plugins {
-    id("android.app")
+    id("android.lib")
     id("android.hilt")
 }
 
 android {
-    namespace = "com.hwaryun.noteapp"
+    namespace = "com.hwaryun.note_list"
 }
 
 dependencies {
     implementation(project(":core:design-system"))
-    implementation(project(":feature:note-list"))
+    implementation(project(":core:domain"))
 }

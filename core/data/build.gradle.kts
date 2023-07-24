@@ -8,7 +8,6 @@ android {
 }
 
 dependencies {
+    api(project(":core:common"))
     api(project(":core:database"))
-
-    implementation(libs.converter.gson)
 }
