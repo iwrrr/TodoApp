@@ -27,6 +27,7 @@ import com.hwaryun.note_list.components.NoteGrid
 
 @Composable
 internal fun NoteListRoute(
+    navigateToAddEditNote: () -> Unit,
     onNoteClicked: (Int) -> Unit,
     onShowSnackbar: suspend (String, String?) -> Boolean,
     viewModel: NoteListViewModel = hiltViewModel()
@@ -39,7 +40,7 @@ internal fun NoteListRoute(
 
     NoteListScreen(
         state = state,
-        navigateToAddEditNote = {},
+        navigateToAddEditNote = navigateToAddEditNote,
         onNoteClicked = onNoteClicked,
         onShowSnackbar = onShowSnackbar,
         resetErrorState = viewModel::resetErrorState

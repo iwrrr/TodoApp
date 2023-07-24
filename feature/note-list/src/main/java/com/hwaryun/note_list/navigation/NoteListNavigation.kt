@@ -9,6 +9,7 @@ const val noteListRoute = "notes"
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.noteListScreen(
+    navigateToAddEditNote: () -> Unit,
     onNoteClicked: (Int) -> Unit,
     onShowSnackbar: suspend (String, String?) -> Boolean
 ) {
@@ -16,6 +17,7 @@ fun NavGraphBuilder.noteListScreen(
         route = noteListRoute,
     ) {
         NoteListRoute(
+            navigateToAddEditNote = navigateToAddEditNote,
             onNoteClicked = onNoteClicked,
             onShowSnackbar = onShowSnackbar
         )

@@ -4,6 +4,8 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.google.accompanist.navigation.animation.AnimatedNavHost
+import com.hwaryun.note_add_edit.navigation.navigateToAddEditNote
+import com.hwaryun.note_add_edit.navigation.noteAddEditScreen
 import com.hwaryun.note_list.navigation.noteListRoute
 import com.hwaryun.note_list.navigation.noteListScreen
 import com.hwaryun.noteapp.MainAppState
@@ -23,7 +25,12 @@ fun MainAppNavHost(
         startDestination = startDestination
     ) {
         noteListScreen(
-            onNoteClicked = {},
+            navigateToAddEditNote = navController::navigateToAddEditNote,
+            onNoteClicked = navController::navigateToAddEditNote,
+            onShowSnackbar = onShowSnackbar
+        )
+        noteAddEditScreen(
+            popBackStack = navController::popBackStack,
             onShowSnackbar = onShowSnackbar
         )
     }
