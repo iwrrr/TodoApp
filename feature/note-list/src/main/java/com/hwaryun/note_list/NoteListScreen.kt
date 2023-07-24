@@ -28,6 +28,7 @@ import com.hwaryun.note_list.components.NoteGrid
 @Composable
 internal fun NoteListRoute(
     onNoteClicked: (Int) -> Unit,
+    onShowSnackbar: suspend (String, String?) -> Boolean,
     viewModel: NoteListViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -40,6 +41,8 @@ internal fun NoteListRoute(
         state = state,
         navigateToAddEditNote = {},
         onNoteClicked = onNoteClicked,
+        onShowSnackbar = onShowSnackbar,
+        resetErrorState = viewModel::resetErrorState
     )
 }
 
@@ -49,8 +52,17 @@ internal fun NoteListRoute(
 private fun NoteListScreen(
     state: NoteListState,
     navigateToAddEditNote: () -> Unit,
-    onNoteClicked: (Int) -> Unit
+    onNoteClicked: (Int) -> Unit,
+    onShowSnackbar: suspend (String, String?) -> Boolean,
+    resetErrorState: () -> Unit,
 ) {
+    LaunchedEffect(state) {
+        if (state.error.isNotEmpty()) {
+            onShowSnackbar(state.error, null)
+            resetErrorState()
+        }
+    }
+    
     Scaffold(
         topBar = {
             TopAppBar(
@@ -94,7 +106,9 @@ private fun DefaultPreview() {
         NoteListScreen(
             state = NoteListState(),
             navigateToAddEditNote = {},
-            onNoteClicked = {}
+            onNoteClicked = {},
+            onShowSnackbar = { _, _ -> false },
+            resetErrorState = {}
         )
     }
 }

@@ -22,6 +22,9 @@ fun MainAppNavHost(
         modifier = modifier,
         startDestination = startDestination
     ) {
-        noteListScreen(onNoteClicked = {})
+        noteListScreen(
+            onNoteClicked = {},
+            onShowSnackbar = onShowSnackbar
+        )
     }
 }

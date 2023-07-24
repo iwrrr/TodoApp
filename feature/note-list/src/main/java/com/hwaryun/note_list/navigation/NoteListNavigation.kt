@@ -10,10 +10,14 @@ const val noteListRoute = "notes"
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.noteListScreen(
     onNoteClicked: (Int) -> Unit,
+    onShowSnackbar: suspend (String, String?) -> Boolean
 ) {
     composable(
         route = noteListRoute,
     ) {
-        NoteListRoute(onNoteClicked = onNoteClicked)
+        NoteListRoute(
+            onNoteClicked = onNoteClicked,
+            onShowSnackbar = onShowSnackbar
+        )
     }
 }
