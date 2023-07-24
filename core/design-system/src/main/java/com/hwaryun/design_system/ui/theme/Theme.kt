@@ -1,4 +1,4 @@
-package com.hwaryun.noteapp.ui.theme
+package com.hwaryun.design_system.ui.theme
 
 import android.app.Activity
 import android.os.Build
