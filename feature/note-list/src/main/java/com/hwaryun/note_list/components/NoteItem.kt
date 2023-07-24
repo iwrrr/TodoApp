@@ -56,7 +56,7 @@ internal fun NoteItem(
             }
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = convertUnixToDate(note.dueDate, "dd MMMM yyyy"),
+                text = "Due " + convertUnixToDate(note.dueDate, "dd MMMM yyyy"),
                 modifier = Modifier.fillMaxWidth(),
                 style = MaterialTheme.typography.labelSmall
             )
