@@ -13,6 +13,7 @@ interface NoteRepository {
     fun getNotes(): Flow<DataResult<List<NoteEntity>>>
     fun getNote(id: Int): Flow<DataResult<NoteEntity>>
     fun upsertNote(title: String, desc: String, dueDate: Long): Flow<DataResult<Unit>>
+    fun deleteNote(id: Int): Flow<DataResult<Unit>>
 }
 
 class NoteRepositoryImpl @Inject constructor(
@@ -35,5 +36,9 @@ class NoteRepositoryImpl @Inject constructor(
         )
 
         emit(proceed { noteDao.upsertNote(noteEntity) })
+    }
+
+    override fun deleteNote(id: Int): Flow<DataResult<Unit>> = flow {
+        emit(proceed { noteDao.deleteNote(id) })
     }
 }

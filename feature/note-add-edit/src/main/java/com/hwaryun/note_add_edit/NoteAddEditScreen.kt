@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Save
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
@@ -58,6 +59,7 @@ internal fun NoteAddEditRoute(
         popBackStack = popBackStack,
         onShowSnackbar = onShowSnackbar,
         upsertNote = viewModel::upsertNote,
+        deleteNote = viewModel::deleteNote,
         updateTitleState = viewModel::updateTitleState,
         updateDescState = viewModel::updateDescState,
         updateDueDateState = viewModel::updateDueDateState,
@@ -72,6 +74,7 @@ private fun NoteAddEditScreen(
     state: NoteAddEditState,
     popBackStack: () -> Unit,
     upsertNote: () -> Unit,
+    deleteNote: (Int) -> Unit,
     updateTitleState: (String) -> Unit,
     updateDescState: (String) -> Unit,
     updateDueDateState: (Long) -> Unit,
@@ -104,6 +107,16 @@ private fun NoteAddEditScreen(
                             imageVector = Icons.Rounded.ArrowBack,
                             contentDescription = null
                         )
+                    }
+                },
+                actions = {
+                    if (state.isEdit) {
+                        IconButton(onClick = { deleteNote(state.noteId) }) {
+                            Icon(
+                                imageVector = Icons.Rounded.Delete,
+                                contentDescription = null
+                            )
+                        }
                     }
                 }
             )
@@ -226,6 +239,7 @@ private fun DefaultPreview() {
             state = NoteAddEditState(),
             popBackStack = {},
             upsertNote = {},
+            deleteNote = {},
             onShowSnackbar = { _, _ -> false },
             updateTitleState = {},
             updateDescState = {},

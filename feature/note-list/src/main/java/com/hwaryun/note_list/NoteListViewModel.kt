@@ -4,17 +4,20 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hwaryun.common.ext.subscribe
 import com.hwaryun.domain.model.Note
+import com.hwaryun.domain.usecase.DeleteNoteUseCase
 import com.hwaryun.domain.usecase.GetNotesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class NoteListViewModel @Inject constructor(
-    private val getNotesUseCase: GetNotesUseCase
+    private val getNotesUseCase: GetNotesUseCase,
+    private val deleteNoteUseCase: DeleteNoteUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(NoteListState())
@@ -51,6 +54,13 @@ class NoteListViewModel @Inject constructor(
                     }
                 )
             }
+        }
+    }
+
+    fun deleteNote(id: Int) {
+        viewModelScope.launch {
+            deleteNoteUseCase(id).collect()
+            getNotes()
         }
     }
 

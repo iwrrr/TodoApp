@@ -5,12 +5,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hwaryun.common.ext.orZero
 import com.hwaryun.common.ext.subscribe
+import com.hwaryun.domain.usecase.DeleteNoteUseCase
 import com.hwaryun.domain.usecase.GetNoteUseCase
 import com.hwaryun.domain.usecase.UpsertNoteUseCase
 import com.hwaryun.note_add_edit.navigation.NOTE_ID
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,6 +21,7 @@ import javax.inject.Inject
 class NoteAddEditViewModel @Inject constructor(
     private val getNoteUseCase: GetNoteUseCase,
     private val upsertNoteUseCase: UpsertNoteUseCase,
+    private val deleteNoteUseCase: DeleteNoteUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -44,9 +47,11 @@ class NoteAddEditViewModel @Inject constructor(
                     doOnSuccess = {
                         _state.update {
                             it.copy(
+                                noteId = result.value?.id.orZero(),
                                 title = result.value?.title.orEmpty(),
                                 desc = result.value?.desc.orEmpty(),
                                 dueDate = result.value?.dueDate.orZero(),
+                                isEdit = !result.value?.title.isNullOrEmpty() || !result.value?.desc.isNullOrEmpty(),
                                 isLoading = false
                             )
                         }
@@ -106,6 +111,18 @@ class NoteAddEditViewModel @Inject constructor(
         }
     }
 
+    fun deleteNote(id: Int) {
+        viewModelScope.launch {
+            deleteNoteUseCase(id).collect()
+        }
+
+        _state.update {
+            it.copy(
+                addOrEdit = Unit
+            )
+        }
+    }
+
     fun updateTitleState(title: String) {
         _state.update { it.copy(title = title) }
     }
@@ -122,12 +139,3 @@ class NoteAddEditViewModel @Inject constructor(
         _state.update { it.copy(error = "") }
     }
 }
-
-data class NoteAddEditState(
-    val addOrEdit: Any? = null,
-    val title: String = "",
-    val desc: String = "",
-    val dueDate: Long = 0L,
-    val isLoading: Boolean = false,
-    val error: String = ""
-)

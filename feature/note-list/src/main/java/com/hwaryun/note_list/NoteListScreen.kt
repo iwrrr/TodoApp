@@ -43,6 +43,7 @@ internal fun NoteListRoute(
         navigateToAddEditNote = navigateToAddEditNote,
         onNoteClicked = onNoteClicked,
         onShowSnackbar = onShowSnackbar,
+        deleteNote = viewModel::deleteNote,
         resetErrorState = viewModel::resetErrorState
     )
 }
@@ -54,6 +55,7 @@ private fun NoteListScreen(
     state: NoteListState,
     navigateToAddEditNote: () -> Unit,
     onNoteClicked: (Int) -> Unit,
+    deleteNote: (Int) -> Unit,
     onShowSnackbar: suspend (String, String?) -> Boolean,
     resetErrorState: () -> Unit,
 ) {
@@ -81,7 +83,8 @@ private fun NoteListScreen(
             NoteGrid(
                 modifier = Modifier.fillMaxSize(),
                 notes = state.notes,
-                onNoteClicked = onNoteClicked
+                onNoteClicked = onNoteClicked,
+                deleteNote = deleteNote
             )
 
             if (state.notes.isEmpty()) {
@@ -108,6 +111,7 @@ private fun DefaultPreview() {
             state = NoteListState(),
             navigateToAddEditNote = {},
             onNoteClicked = {},
+            deleteNote = {},
             onShowSnackbar = { _, _ -> false },
             resetErrorState = {}
         )

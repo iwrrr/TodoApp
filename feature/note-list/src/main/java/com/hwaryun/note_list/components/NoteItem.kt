@@ -35,19 +35,25 @@ internal fun NoteItem(
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            Text(
-                text = note.title,
-                modifier = Modifier.fillMaxWidth(),
-                style = MaterialTheme.typography.titleMedium
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = note.desc,
-                modifier = Modifier.fillMaxWidth(),
-                style = MaterialTheme.typography.bodyMedium,
-                maxLines = 5,
-                overflow = TextOverflow.Ellipsis
-            )
+            if (note.title.isNotEmpty()) {
+                Text(
+                    text = note.title,
+                    modifier = Modifier.fillMaxWidth(),
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
+            if (note.title.isNotEmpty() && note.desc.isNotEmpty()) {
+                Spacer(modifier = Modifier.height(8.dp))
+            }
+            if (note.desc.isNotEmpty()) {
+                Text(
+                    text = note.desc,
+                    modifier = Modifier.fillMaxWidth(),
+                    style = MaterialTheme.typography.bodyMedium,
+                    maxLines = 5,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = convertUnixToDate(note.dueDate, "dd MMMM yyyy"),
