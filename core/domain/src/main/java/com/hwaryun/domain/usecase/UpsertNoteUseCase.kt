@@ -17,6 +17,11 @@ class UpsertNoteUseCase @Inject constructor(
     override fun buildFlowUseCase(param: Param?): Flow<UiResult<Unit>> = flow {
         emit(UiResult.Loading())
         param?.let {
+            if (param.title.isEmpty() || param.desc.isEmpty()) {
+                emit(UiResult.Failure(Exception("Title or desc cannot be empty!")))
+                return@flow
+            }
+
             repository.upsertNote(
                 title = param.title,
                 desc = param.desc,
