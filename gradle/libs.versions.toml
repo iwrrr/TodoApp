@@ -35,7 +35,7 @@ retrofit = "2.9.0"
 loggingInterceptor = "4.10.0"
 
 # Database
-room = "2.4.3"
+room = "2.5.2"
 
 # Datastore
 dataStore = "1.0.0"
