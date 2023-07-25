@@ -66,7 +66,7 @@ private fun NoteListScreen(
             resetErrorState()
         }
     }
-    
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -80,7 +80,10 @@ private fun NoteListScreen(
             }
         }
     ) { innerPadding ->
-        Box(modifier = Modifier.padding(innerPadding)) {
+        Box(
+            modifier = Modifier.padding(innerPadding),
+            contentAlignment = Alignment.Center
+        ) {
             NoteGrid(
                 modifier = Modifier.fillMaxSize(),
                 notes = state.notes,

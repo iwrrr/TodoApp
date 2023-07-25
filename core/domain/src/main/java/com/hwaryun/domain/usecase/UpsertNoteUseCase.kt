@@ -5,6 +5,8 @@ import com.hwaryun.common.di.DispatcherProvider
 import com.hwaryun.common.domain.FlowUseCase
 import com.hwaryun.common.ext.suspendSubscribe
 import com.hwaryun.data.repository.NoteRepository
+import com.hwaryun.domain.mapper.toNoteEntity
+import com.hwaryun.domain.model.Note
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -12,21 +14,17 @@ import javax.inject.Inject
 class UpsertNoteUseCase @Inject constructor(
     private val repository: NoteRepository,
     dispatcherProvider: DispatcherProvider
-) : FlowUseCase<UpsertNoteUseCase.Param, UiResult<Unit>>(dispatcherProvider.io) {
+) : FlowUseCase<Note, UiResult<Unit>>(dispatcherProvider.io) {
 
-    override fun buildFlowUseCase(param: Param?): Flow<UiResult<Unit>> = flow {
+    override fun buildFlowUseCase(param: Note?): Flow<UiResult<Unit>> = flow {
         emit(UiResult.Loading())
-        param?.let {
-            if (param.title.isEmpty() && param.desc.isEmpty()) {
+        param?.let { note ->
+            if (note.title.isEmpty() && note.desc.isEmpty()) {
                 emit(UiResult.Failure(Exception("Title or desc cannot be empty!")))
                 return@flow
             }
 
-            repository.upsertNote(
-                title = param.title,
-                desc = param.desc,
-                dueDate = param.dueDate,
-            ).collect { result ->
+            repository.upsertNote(note.toNoteEntity()).collect { result ->
                 result.suspendSubscribe(
                     doOnSuccess = {
                         emit(UiResult.Success(Unit))

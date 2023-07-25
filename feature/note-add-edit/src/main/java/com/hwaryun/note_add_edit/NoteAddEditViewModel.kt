@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hwaryun.common.ext.orZero
 import com.hwaryun.common.ext.subscribe
+import com.hwaryun.domain.model.Note
 import com.hwaryun.domain.usecase.DeleteNoteUseCase
 import com.hwaryun.domain.usecase.GetNoteUseCase
 import com.hwaryun.domain.usecase.UpsertNoteUseCase
@@ -47,6 +48,7 @@ class NoteAddEditViewModel @Inject constructor(
                     doOnSuccess = {
                         _state.update {
                             it.copy(
+                                note = result.value,
                                 noteId = result.value?.id.orZero(),
                                 title = result.value?.title.orEmpty(),
                                 desc = result.value?.desc.orEmpty(),
@@ -71,17 +73,14 @@ class NoteAddEditViewModel @Inject constructor(
 
     fun upsertNote() {
         viewModelScope.launch {
-            val title = state.value.title
-            val desc = state.value.desc
-            val dueDate = state.value.dueDate
+            val note = Note(
+                id = state.value.note?.id,
+                title = state.value.title,
+                desc = state.value.desc,
+                dueDate = state.value.dueDate,
+            )
 
-            upsertNoteUseCase(
-                UpsertNoteUseCase.Param(
-                    title = title,
-                    desc = desc,
-                    dueDate = dueDate
-                )
-            ).collect { result ->
+            upsertNoteUseCase(note).collect { result ->
                 result.subscribe(
                     doOnLoading = {
                         _state.update {

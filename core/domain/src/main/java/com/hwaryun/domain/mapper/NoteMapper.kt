@@ -11,3 +11,12 @@ fun NoteEntity.toNote(): Note {
         dueDate = dueDate
     )
 }
+
+fun Note.toNoteEntity(): NoteEntity {
+    return NoteEntity(
+        id = id,
+        title = title,
+        desc = desc,
+        dueDate = dueDate
+    )
+}

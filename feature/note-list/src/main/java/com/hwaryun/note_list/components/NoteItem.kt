@@ -28,7 +28,7 @@ internal fun NoteItem(
     OutlinedCard(
         modifier = modifier,
         shape = MaterialTheme.shapes.medium,
-        onClick = { onNoteClicked(note.id) }
+        onClick = { note.id?.let(onNoteClicked) }
     ) {
         Column(
             modifier = Modifier
