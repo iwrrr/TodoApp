@@ -2,8 +2,8 @@ package com.hwaryun.database.di
 
 import android.content.Context
 import androidx.room.Room
-import com.hwaryun.database.NoteDao
-import com.hwaryun.database.NoteDatabase
+import com.hwaryun.database.TodoDao
+import com.hwaryun.database.TodoDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,14 +17,14 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideDatabase(@ApplicationContext context: Context): NoteDatabase {
-        return Room.databaseBuilder(context, NoteDatabase::class.java, "notes.db")
+    fun provideDatabase(@ApplicationContext context: Context): TodoDatabase {
+        return Room.databaseBuilder(context, TodoDatabase::class.java, "todos.db")
             .build()
     }
 
     @Provides
     @Singleton
-    fun provideNoteDao(database: NoteDatabase): NoteDao {
-        return database.noteDao
+    fun provideTodoDao(database: TodoDatabase): TodoDao {
+        return database.todoDao
     }
 }

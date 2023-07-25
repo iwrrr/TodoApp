@@ -13,12 +13,12 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "NoteApp"
+rootProject.name = "TodoApp"
 include(":app")
 include(":core:common")
 include(":core:design-system")
 include(":core:database")
 include(":core:data")
 include(":core:domain")
-include(":feature:note-list")
-include(":feature:note-add-edit")
+include(":feature:todo-list")
+include(":feature:todo-add-edit")

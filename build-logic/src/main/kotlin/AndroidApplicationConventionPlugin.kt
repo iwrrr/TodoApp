@@ -20,7 +20,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                 configureKotlinAndroid(this)
                 defaultConfig.apply {
                     targetSdk = 33
-                    applicationId = "com.hwaryun.noteapp"
+                    applicationId = "com.hwaryun.todoapp"
                     versionCode = 1
                     versionName = "1.0"
                 }

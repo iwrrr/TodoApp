@@ -31,8 +31,8 @@
             <option value="$PROJECT_DIR$/core/design-system" />
             <option value="$PROJECT_DIR$/core/domain" />
             <option value="$PROJECT_DIR$/feature" />
-            <option value="$PROJECT_DIR$/feature/note-add-edit" />
-            <option value="$PROJECT_DIR$/feature/note-list" />
+            <option value="$PROJECT_DIR$/feature/todo-add-edit" />
+            <option value="$PROJECT_DIR$/feature/todo-list" />
           </set>
         </option>
       </GradleProjectSettings>

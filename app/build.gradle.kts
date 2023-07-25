@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.hwaryun.noteapp"
+    namespace = "com.hwaryun.todoapp"
 }
 
 dependencies {
     implementation(project(":core:design-system"))
-    implementation(project(":feature:note-list"))
-    implementation(project(":feature:note-add-edit"))
+    implementation(project(":feature:todo-list"))
+    implementation(project(":feature:todo-add-edit"))
 }

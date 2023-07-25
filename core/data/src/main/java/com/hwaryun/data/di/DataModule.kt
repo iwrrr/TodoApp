@@ -1,7 +1,7 @@
 package com.hwaryun.data.di
 
-import com.hwaryun.data.repository.NoteRepository
-import com.hwaryun.data.repository.NoteRepositoryImpl
+import com.hwaryun.data.repository.TodoRepository
+import com.hwaryun.data.repository.TodoRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -12,5 +12,5 @@ import dagger.hilt.components.SingletonComponent
 abstract class DataModule {
 
     @Binds
-    abstract fun bindNoteRepository(noteRepositoryImpl: NoteRepositoryImpl): NoteRepository
+    abstract fun bindTodoRepository(todoRepositoryImpl: TodoRepositoryImpl): TodoRepository
 }
